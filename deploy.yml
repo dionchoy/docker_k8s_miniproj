@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miniproj
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: miniproj
+  template:
+    metadata:
+      labels:
+        app: miniproj
+    spec:
+      containers:
+      - name: miniproj
+        image: dionchoy/miniproj
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: "/data"
+          name: miniproj-storage
+      volumes:
+      - name: miniproj-storage
+        persistentVolumeClaim:
+          claimName: miniproj-pvc
